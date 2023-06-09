@@ -1,8 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 
-import Home from "@/pages/Home";
 import LayoutProvider from "@/App";
-import Journal from "@/pages/Journal";
+import { Home, Journal } from "@/pages";
 
 const router = createBrowserRouter([
   {
