@@ -1,11 +1,22 @@
+import { TOTAL_TIME } from "@/constants/constants";
 import { atom } from "recoil";
 
-export const timerMinuteState = atom<number>({
-  key: "timerMinuteState",
-  default: 25,
+export const timerState = atom<number>({
+  key: "timerState",
+  default: TOTAL_TIME,
 });
 
-export const timerSecondState = atom<number>({
-  key: "timerSecondState",
+export const isPlayState = atom<boolean>({
+  key: "isPlayState",
+  default: false,
+});
+
+export const roundState = atom<number>({
+  key: "roundState",
+  default: 0,
+});
+
+export const goalState = atom<number>({
+  key: "goalState",
   default: 0,
 });

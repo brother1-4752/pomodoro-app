@@ -1,26 +1,56 @@
+import { useRef, useEffect, useCallback } from "react";
 import { useRecoilState } from "recoil";
-
 import HomeContainer from "./Home.styled";
-import { timerMinuteState, timerSecondState } from "@/atoms/atoms";
-import { useEffect } from "react";
+import formatTimeData from "@/utils/formatTimeData";
+import { goalState, isPlayState, roundState, timerState } from "@/atoms/atoms";
+import {
+  TIMER_INTERVAL_MILLISECONDS,
+  TOTAL_GOAL,
+  TOTAL_ROUND,
+  TOTAL_TIME,
+} from "@/constants/constants";
 
 export default function Home() {
-  const [minute, setMinute] = useRecoilState(timerMinuteState);
-  const [second, setSecond] = useRecoilState(timerSecondState);
+  const [time, setTime] = useRecoilState(timerState);
+  const { FORMATTED_MINUTE, FORMATTED_SECOND } = formatTimeData(time);
+  const [isPlay, setIsPlay] = useRecoilState(isPlayState);
+  const [round, setRound] = useRecoilState(roundState);
+  const [goal, setGoal] = useRecoilState(goalState);
 
-  const timerId = setInterval(() => {
-    if (minute === 0 && second === 0) {
-      clearInterval(timerId);
-      return;
-    }
+  const timerRef = useRef<number>();
 
-    if (second === 0) {
-      setMinute((prev) => prev - 1);
-      setSecond(59);
+  const toggleIsPlay = () => {
+    setIsPlay((prev) => !prev);
+  };
+
+  const resetTimer = useCallback(() => {
+    setTime(TOTAL_TIME);
+    setIsPlay(false);
+  }, [setTime, setIsPlay]);
+
+  useEffect(() => {
+    if (isPlay) {
+      timerRef.current = setInterval(() => {
+        if (time === 0) {
+          resetTimer();
+          if (round === TOTAL_ROUND - 1) {
+            setRound(0);
+            setGoal((prev) => prev + 1);
+          } else {
+            setRound((prev) => prev + 1);
+          }
+        } else if (goal === TOTAL_GOAL - 1) {
+          alert("미션 성공!");
+        } else {
+          setTime((prev) => prev - 1);
+        }
+      }, TIMER_INTERVAL_MILLISECONDS);
     } else {
-      setSecond((prev) => prev - 1);
+      clearInterval(timerRef.current);
     }
-  }, 10000);
+
+    return () => clearInterval(timerRef.current);
+  }, [isPlay, time, setTime, resetTimer, goal, setGoal, round, setRound]);
 
   return (
     <HomeContainer>
@@ -28,23 +58,27 @@ export default function Home() {
 
       <section className="home__timer--wrapper">
         <div className="home__timer__time home__timer--minute">
-          <span>{minute}</span>
+          <span>{FORMATTED_MINUTE}</span>
         </div>
         <div>:</div>
         <div className="home__timer__time home__timer--second">
-          <span>{second}</span>
+          <span>{FORMATTED_SECOND}</span>
         </div>
       </section>
 
-      <button>▶:⏸</button>
+      <button onClick={toggleIsPlay}>{isPlay ? "⏸" : "▶"}</button>
 
       <div>
         <div>
-          <div>0/4</div>
+          <div>
+            {round}/{TOTAL_ROUND}
+          </div>
           <p>ROUND</p>
         </div>
         <div>
-          <div>0/12</div>
+          <div>
+            {goal}/{TOTAL_GOAL}
+          </div>
           <p>GOAL</p>
         </div>
       </div>
