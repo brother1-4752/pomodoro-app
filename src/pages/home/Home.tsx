@@ -56,30 +56,32 @@ export default function Home() {
     <HomeContainer>
       <h1 className="home__title">Pomodoro</h1>
 
-      <section className="home__timer--wrapper">
-        <div className="home__timer__time home__timer--minute">
+      <section className="home__timer__wrapper">
+        <div className="home__timer__time">
           <span>{FORMATTED_MINUTE}</span>
         </div>
         <div>:</div>
-        <div className="home__timer__time home__timer--second">
+        <div className="home__timer__time">
           <span>{FORMATTED_SECOND}</span>
         </div>
       </section>
 
-      <button onClick={toggleIsPlay}>{isPlay ? "⏸" : "▶"}</button>
+      <button className="home__toggle--btn" onClick={toggleIsPlay}>
+        {isPlay ? "⏸" : "▶"}
+      </button>
 
-      <div>
-        <div>
+      <div className="counter__wrapper">
+        <div className="counter__mission">
+          <p>ROUND</p>
           <div>
             {round}/{TOTAL_ROUND}
           </div>
-          <p>ROUND</p>
         </div>
-        <div>
+        <div className="counter__mission">
+          <p>GOAL</p>
           <div>
             {goal}/{TOTAL_GOAL}
           </div>
-          <p>GOAL</p>
         </div>
       </div>
     </HomeContainer>

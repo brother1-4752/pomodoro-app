@@ -1,10 +1,8 @@
 import styled from "styled-components";
 
 const HomeContainer = styled.div`
-  width: 60%;
+  width: 100%;
   height: 100vh;
-
-  padding-top: 50px;
 
   display: flex;
   flex-direction: column;
@@ -21,19 +19,54 @@ const HomeContainer = styled.div`
     color: white;
   }
 
-  .home__timer--wrapper {
+  .home__timer__wrapper {
     width: 600px;
-    height: 400px;
+    height: 300px;
+    font-size: 36px;
 
     display: flex;
     justify-content: space-evenly;
+    align-items: center;
+    cursor: pointer;
 
     .home__timer__time {
       width: 200px;
-      height: 300px;
+      line-height: 200px;
+      text-align: center;
 
       background-color: white;
       border-radius: 15px;
+    }
+  }
+
+  .home__toggle--btn {
+    width: 100px;
+    height: 50px;
+
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+  }
+
+  .counter__wrapper {
+    width: 50%;
+    height: 200px;
+
+    margin-top: 20px;
+
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+
+    .counter__mission {
+      width: 150px;
+      line-height: 50px;
+
+      display: flex;
+      justify-content: space-evenly;
+
+      background-color: white;
+      border-radius: 10px;
     }
   }
 `;
