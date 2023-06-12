@@ -29,24 +29,24 @@ const HomeContainer = styled.div`
     align-items: center;
     cursor: pointer;
 
-    .home__timer__time {
+    /* .home__timer__time {
       width: 200px;
       line-height: 200px;
       text-align: center;
 
       background-color: white;
       border-radius: 15px;
-    }
+    } */
   }
 
-  .home__toggle--btn {
+  /* .home__toggle--btn {
     width: 100px;
     height: 50px;
 
     border: none;
     border-radius: 15px;
     cursor: pointer;
-  }
+  } */
 
   .counter__wrapper {
     width: 50%;

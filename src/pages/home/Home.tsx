@@ -9,6 +9,8 @@ import {
   TOTAL_ROUND,
   TOTAL_TIME,
 } from "@/constants/constants";
+import styled from "styled-components";
+import { motion } from "framer-motion";
 
 export default function Home() {
   const [time, setTime] = useRecoilState(timerState);
@@ -50,25 +52,57 @@ export default function Home() {
     }
 
     return () => clearInterval(timerRef.current);
-  }, [isPlay, time, setTime, resetTimer, goal, setGoal, round, setRound]);
+  }, [time, isPlay, resetTimer, goal, round]);
+
+  const TimeCard = styled(motion.div)`
+    width: 200px;
+    line-height: 200px;
+    text-align: center;
+
+    background-color: white;
+    border-radius: 15px;
+  `;
+
+  const ToggleButton = styled(motion.button)`
+    width: 100px;
+    height: 50px;
+
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+  `;
 
   return (
     <HomeContainer>
       <h1 className="home__title">Pomodoro</h1>
 
       <section className="home__timer__wrapper">
-        <div className="home__timer__time">
+        <TimeCard
+          key={`${FORMATTED_MINUTE}-minutes`}
+          initial={{ scale: 0.7, opacity: 0.5 }}
+          transition={{ type: "spring" }}
+          animate={{ opacity: 1, scale: 1 }}
+        >
           <span>{FORMATTED_MINUTE}</span>
-        </div>
+        </TimeCard>
         <div>:</div>
-        <div className="home__timer__time">
-          <span>{FORMATTED_SECOND}</span>
-        </div>
+        <TimeCard
+          key={`${FORMATTED_SECOND}-seconds`}
+          initial={{ scale: 0.7, opacity: 0.5 }}
+          transition={{ type: "spring" }}
+          animate={{ opacity: 1, scale: 1 }}
+        >
+          {FORMATTED_SECOND}
+        </TimeCard>
       </section>
 
-      <button className="home__toggle--btn" onClick={toggleIsPlay}>
+      <ToggleButton
+        whileHover={{ scale: 1.3 }}
+        whileTap={{ scale: 0.8 }}
+        onClick={toggleIsPlay}
+      >
         {isPlay ? "⏸" : "▶"}
-      </button>
+      </ToggleButton>
 
       <div className="counter__wrapper">
         <div className="counter__mission">
